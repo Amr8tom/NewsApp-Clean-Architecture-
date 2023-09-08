@@ -1,47 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:untitled4/Layouts/Newslayout.dart';
-import 'package:untitled4/Network/dio.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news/features/article/presentation/bloc/news_cubit.dart';
+import 'package:news/features/article/presentation/pages/home_view.dart';
+
+import 'config/themes/light_mood.dart';
 
 void main() {
-  DioHelper.init();
-  runApp(MyApp());
+  runApp(
+      BlocProvider(
+    create: (context) => NewsCubit(),
+    child:const MyApp(),
+  ));
 }
-class MyApp extends StatelessWidget {
-  const MyApp({Key key}) : super(key: key);
 
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      themeMode:ThemeMode.light,
-      darkTheme:ThemeData(
-        scaffoldBackgroundColor: Colors.black87,
-      ),
-      home: Newslayout(),
-      theme: ThemeData(
-        primarySwatch:Colors.deepOrange,
-        appBarTheme: AppBarTheme(
-          backwardsCompatibility: false,
-          color: Colors.white,
-          elevation: 0.0,
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: Colors.white,
-            statusBarIconBrightness: Brightness.dark,
-          ),
-          titleTextStyle: TextStyle(
-            color: Colors.black87,
-            fontSize: 25,
-            fontWeight: FontWeight.bold
-          )
-        ),
-        scaffoldBackgroundColor: Colors.white,
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.deepOrange,
-          unselectedItemColor: Colors.black87,
-
-        ),
-      ),
+      debugShowCheckedModeBanner: false,
+      theme: LightMood.lightTheme,
+      home: const HomeView(),
     );
   }
 }
+
